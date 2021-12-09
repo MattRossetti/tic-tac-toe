@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html lang=en>
+  <head>
+    <title>Tic-Tac-Toe</title>
+    <meta charset="UTF-8">
+    <link href="styles.css" rel="stylesheet">
+    <script src="js.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <div class="header">
+      <h1>Tic-Tac-Toe</h1>
+    </div>
+    <div id="game-mode-select-container" class="hidden">Please Select Game Mode
+      <div class="game-mode-container">
+        <div id="player-vs-ai-card" class="game-mode-card">Player Vs AI</div>
+        <div id="player-vs-player-card" class="game-mode-card">Player Vs Player</div>
+      </div>
+      <div id="game-mode-select-error"></div>
+      <button id="start-game-button">Start Game</button>
+    </div>
+    <div id="game-area-container" class="hidden">
+      <div id="turn-indicator-container"></div>
+      <div id="invalid-move-error" class="hide-error">A Marker is already placed there <br>Try a different square</div>
+      <div id="game-board-container"></div>
+    </div>
+    <div class="footer">
+      <h3>Made with 🥞 by <a href="https://www.github.com/MattRossetti">Matt Rossetti</a></h3>
+    </div>
+  </body>
+</html>
