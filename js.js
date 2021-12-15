@@ -199,11 +199,11 @@ const createGameBoard = () => {
     e.target.textContent = `${turnMarker}`;
     const squareID = e.target.getAttribute('data-squareID')
     updateMoveArrays(turnMarker, squareID);
-    nextPlayerTurn();
     totalMoves++;
     let tie = checkForTie(totalMoves);
     if (tie) handleTie();
     let winner = checkForWin();
+    if (winner === undefined && !tie) nextPlayerTurn();
     return handleWinner(winner);
   }
 
