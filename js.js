@@ -1,6 +1,10 @@
 /***** Script for Tic-Tac-Toe  *****/
 
 /* functions */
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 const getRandomSquare = () => {
   return Math.floor(Math.random() * 9)
 }
@@ -82,7 +86,6 @@ const createGameBoard = () => {
     console.log('playerTurn', playerTurn);
     console.log('player2isAI', player2.isAi())
     if (player2.isAi() && xFirst === false) {
-      console.log('playerturn', playerTurn)
       player2AiTurn();
     }
   } 
@@ -101,7 +104,7 @@ const createGameBoard = () => {
     }
   }
 
-  const player2AiTurn = () => {
+  const player2AiTurn = async () => {
     playing = false;
     turnIndicatorContainer.textContent = player2MoveText;
     aiMoveSquare = -1;
@@ -109,7 +112,7 @@ const createGameBoard = () => {
       aiMoveSquare = getRandomSquare();
     }
     while (xMarkedSquares.includes(aiMoveSquare) || oMarkedSquares.includes(aiMoveSquare));
-    console.log(aiMoveSquare);
+    await sleep(1000);
     playing = true;
     gameSquares[aiMoveSquare].click();
   }
@@ -196,6 +199,7 @@ const createGameBoard = () => {
     if (e.target.textContent != '') return showInvalidMoveError()
     if (playing === false) return
     clearMoveErrorMessage();
+    e.target.classList.add('fade-in');
     e.target.textContent = `${turnMarker}`;
     const squareID = e.target.getAttribute('data-squareID')
     updateMoveArrays(turnMarker, squareID);
