@@ -13,7 +13,7 @@
     <div class="header">
       <h1>Tic-Tac-Toe</h1>
     </div>
-    <div id="game-mode-select-container" class="hidden">Please Select Game Mode
+    <div id="game-mode-select-container">Please Select Game Mode
       <div class="game-mode-container">
         <div id="player-vs-ai-card" class="game-mode-card">Player Vs AI</div>
         <div id="player-vs-player-card" class="game-mode-card">Player Vs Player</div>
@@ -22,9 +22,21 @@
       <button id="start-game-button">Start Game</button>
     </div>
     <div id="game-area-container" class="hidden">
-      <div id="turn-indicator-container"></div>
-      <div id="invalid-move-error" class="hide-error">A Marker is already placed there <br>Try a different square</div>
+      <div id="scoreboard"> ScoreBoard
+        <div id="scores-container">
+          <div id="player-one-score" class="score"></div>
+          <div id="player-two-score" class="score"></div>
+        </div>
+      </div>
       <div id="game-board-container"></div>
+      <div id="turn-indicator-container"></div>
+      <div id="play-again-prompt" class="hidden">Would you like to play again?
+        <div id="play-again-button-container">
+          <button id="play-again-yes" class="play-again-button">Yes</button>
+          <button id="play-again-no" class="play-again-button">No</button>
+        </div>  
+      </div>
+      <div id="invalid-move-error" class="hide-error">A Marker is already placed there <br>Try a different square</div>
     </div>
     <div class="footer">
       <h3>Made with 🥞 by <a href="https://www.github.com/MattRossetti">Matt Rossetti</a></h3>
