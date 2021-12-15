@@ -1,6 +1,10 @@
 /***** Script for Tic-Tac-Toe  *****/
 
 /* functions */
+const getRandomSquare = () => {
+  return Math.floor(Math.random() * 9)
+}
+
 const gameModeCardClickUpdater = (card) => {
   playerVsAiCard.classList.remove('clicked');
   playerVsPlayerCard.classList.remove('clicked');
@@ -17,10 +21,9 @@ const createPlayer = () => {
   const incrementWins = () => wins++;
   const getWins = () => wins;
   const assignPlayerType = (input) => playerType = input;
-  const getPlayerType = () => playerType;
   const setPlayerToAi = () => playerIsAi = true;
   const isAi = () => playerIsAi;
-  return {incrementWins, getWins, assignPlayerType, getPlayerType, setPlayerToAi, isAi}
+  return {incrementWins, getWins, assignPlayerType, setPlayerToAi, isAi}
 };
 
 const createGameBoard = () => {
@@ -32,10 +35,13 @@ const createGameBoard = () => {
   const playAgainYes = document.getElementById('play-again-yes');
   const playAgainNo = document.getElementById('play-again-no');
   const playerOneScore = document.getElementById('player-one-score');
-  const playerTwoScore = document.getElementById('player-two-score')
-    
+  const playerTwoScore = document.getElementById('player-two-score');
+
+  //xFirst will toggle on and off to know whos turn it is
+  let xFirst = true;
   let playing = true;
 
+  const gameSquares = [];
   const xMarkedSquares = [];
   const oMarkedSquares = [];
   let totalMoves = 0;
@@ -59,8 +65,26 @@ const createGameBoard = () => {
     gameBoard.clearDisplay();
     setScores();
     playing = true;
-    turnIndicatorContainer.textContent = player1MoveText;
-    playAgainPrompt.classList.add('hidden')
+    if (xFirst) {
+      turnIndicatorContainer.textContent = player2MoveText;
+      xFirst = false;
+      playerTurn = 2;
+      turnMarker = 'O';
+    }
+    else {
+      turnIndicatorContainer.textContent = player1MoveText;
+      xFirst = true;
+      playerTurn = 1;
+      turnMarker = 'X'
+    }
+    playAgainPrompt.classList.add('hidden');
+    console.log('xFirst', xFirst);
+    console.log('playerTurn', playerTurn);
+    console.log('player2isAI', player2.isAi())
+    if (player2.isAi() && xFirst === false) {
+      console.log('playerturn', playerTurn)
+      player2AiTurn();
+    }
   } 
   
   const dontPlayAgain = () => {
@@ -73,8 +97,21 @@ const createGameBoard = () => {
   // setPlayer2MoveTextis called in createDisplay functiion
   const setPlayer2MoveText = (type) => {
     if (type === 'Ai') {
-      player2MoveText = 'Please wait while your opponent quickly makes its move'
+      player2MoveText = 'Please wait while your AI opponent makes its move'
     }
+  }
+
+  const player2AiTurn = () => {
+    playing = false;
+    turnIndicatorContainer.textContent = player2MoveText;
+    aiMoveSquare = -1;
+    do {
+      aiMoveSquare = getRandomSquare();
+    }
+    while (xMarkedSquares.includes(aiMoveSquare) || oMarkedSquares.includes(aiMoveSquare));
+    console.log(aiMoveSquare);
+    playing = true;
+    gameSquares[aiMoveSquare].click();
   }
 
   const nextPlayerTurn = () => {
@@ -82,6 +119,7 @@ const createGameBoard = () => {
       turnMarker = 'O';
       playerTurn = 2;
       turnIndicatorContainer.textContent = player2MoveText;
+      if (player2.isAi()) player2AiTurn();
     }
     else {
       turnMarker = 'X';
@@ -137,6 +175,9 @@ const createGameBoard = () => {
     if (winner === player1) winner_name = 'Player 1'
     else winner_name = 'player 2'
     turnIndicatorContainer.textContent = `Congratulations ${winner_name}, you have won!`
+    if (winner === player2 && player2.isAi) {
+      turnIndicatorContainer.textContent = 'Wow, the computer has beat you!'
+    }
     setScores();
     askToPlayAgain();
   }
@@ -167,7 +208,7 @@ const createGameBoard = () => {
   }
 
   const clearDisplay = () => {
-    squares = gameBoardContainer.children;
+    const squares = gameBoardContainer.children;
     for (let i = 0; i < squares.length; i++) {
       squares[i].textContent = ''
     }
@@ -189,6 +230,7 @@ const createGameBoard = () => {
       square.classList.add('board-square');
       square.setAttribute("data-squareID", i)
       square.addEventListener('click', (e) => markSquare(e));
+      gameSquares.push(square);
       gameBoardContainer.appendChild(square);
     }
   }
@@ -202,12 +244,12 @@ const createGameBoard = () => {
     invalidMoveError.classList.add('hide-error')
   }
 
-  return {createDisplay, clearDisplay}
+  return {createDisplay, clearDisplay, setPlayer2MoveText}
 };
 
 const playerSetup = (gameMode) => {
   if (gameMode === 'playerVsAi') {
-    setPlayer2MoveText('Ai');
+    gameBoard.setPlayer2MoveText('Ai');
     player2.setPlayerToAi();
   }
   gameBoard.createDisplay();
