@@ -178,7 +178,7 @@ const createGameBoard = () => {
     if (winner === player1) winner_name = 'Player 1'
     else winner_name = 'player 2'
     turnIndicatorContainer.textContent = `Congratulations ${winner_name}, you have won!`
-    if (winner === player2 && player2.isAi) {
+    if (winner === player2 && player2.isAi()) {
       turnIndicatorContainer.textContent = 'Wow, the computer has beat you!'
     }
     setScores();
@@ -214,6 +214,7 @@ const createGameBoard = () => {
   const clearDisplay = () => {
     const squares = gameBoardContainer.children;
     for (let i = 0; i < squares.length; i++) {
+      squares[i].classList.remove('fade-in')
       squares[i].textContent = ''
     }
     totalMoves = 0;
