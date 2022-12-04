@@ -1,7 +1,7 @@
 # Tic-Tac-Toe!
 
 ## Project Link
-www.mattrossetti.github.io/tic-tac-toe
+https://mattrossetti.github.io/tic-tac-toe/
 
 ## Project Overview
 This Project is part of The Odin Project's Full stack JavaScript course. I created a simple tic-tac-toe game in a broswer. The player can choose to either play against another person, or play against an AI. The page also tracks how many wins each player has.
